@@ -1,0 +1,45 @@
+{
+  "name": "agentbench-studio",
+  "version": "1.2.0",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "packages/shared",
+    "apps/server",
+    "apps/web",
+    "fixtures/project-a",
+    "fixtures/project-b"
+  ],
+  "scripts": {
+    "dev": "npm run build -w @agentbench/shared && concurrently -k -n server,web -c blue,cyan \"npm run dev:server\" \"npm run dev:web\"",
+    "dev:web": "npm run dev -w @agentbench/web",
+    "dev:server": "npm run dev -w @agentbench/server",
+    "start": "npm run build && npm run start -w @agentbench/server",
+    "build": "npm run build -w @agentbench/shared && npm run build -w @agentbench/server && npm run build -w @agentbench/web",
+    "typecheck": "npm run build -w @agentbench/shared && npm run typecheck -w @agentbench/server && npm run typecheck -w @agentbench/web",
+    "lint": "eslint . --max-warnings=0",
+    "test": "vitest run --exclude tests/e2e/**",
+    "test:e2e": "vitest run --config vitest.e2e.config.ts",
+    "test:ui": "node scripts/ui-smoke.mjs",
+    "test:ui-demo": "node scripts/ui-demo-e2e.mjs",
+    "demo": "npm run dev",
+    "clean": "node scripts/clean.mjs"
+  },
+  "overrides": {
+    "esbuild": "0.28.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.31.0",
+    "@types/node": "^24.0.15",
+    "concurrently": "^9.2.0",
+    "eslint": "^9.31.0",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-react-refresh": "^0.4.20",
+    "globals": "^16.3.0",
+    "tsx": "^4.20.3",
+    "tsup": "^8.5.0",
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.38.0",
+    "vitest": "^3.2.4"
+  }
+}
